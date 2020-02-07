@@ -16,7 +16,7 @@ myGene = trainGenerator(2,'/content/drive/My Drive/Colab Notebooks/unetmembraneu
 #준비 된 유넷신경망을 불러와 훈련시킵니다.그리고 가중치를 저장합니다.
 model = unet()
 model_checkpoint = ModelCheckpoint('unet_membrane.hdf5', monitor='loss',verbose=1, save_best_only=True)
-model.fit_generator(myGene,steps_per_epoch=200,epochs=20,callbacks=[model_checkpoint])
+model.fit_generator(myGene,steps_per_epoch=1200,epochs=10,callbacks=[model_checkpoint])
 
 #학습된 유넷신경망으로 테스트셋을 돌려서 예측된 이미지를 추출 후 확인해봅니다.
 testGene = testGenerator("/content/drive/My Drive/Colab Notebooks/unetmembraneup/unet/data/membrane/test")
