@@ -9,7 +9,7 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras import backend as keras
 
-#유넷신경망의 전반부(drop5)는 이미지의 특징값들을 추출해내는 과정입니다.
+#유넷신경망의 전반부(conv1 ~ drop5)는 이미지의 특징값들을 추출해내는 과정입니다.
 def unet(pretrained_weights = None,input_size = (256,256,1)):
     inputs = Input(input_size)
     conv1 = Conv2D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(inputs)
@@ -23,12 +23,12 @@ def unet(pretrained_weights = None,input_size = (256,256,1)):
     pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
     conv4 = Conv2D(512, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool3)
     conv4 = Conv2D(512, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv4)
-    drop4 = Dropout(0.5)(conv4)
+    drop4 = Dropout(0.54)(conv4)
     pool4 = MaxPooling2D(pool_size=(2, 2))(drop4)
 
     conv5 = Conv2D(1024, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(pool4)
     conv5 = Conv2D(1024, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv5)
-    drop5 = Dropout(0.5)(conv5)
+    drop5 = Dropout(0.54)(conv5)
 
 #유넷신경망의 후반부(up6 ~ con10)는 원본크기의 복원과 함께 각 픽셀들의 위치값들이 보정됩니다.
     up6 = Conv2D(512, 2, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(UpSampling2D(size = (2,2))(drop5))
